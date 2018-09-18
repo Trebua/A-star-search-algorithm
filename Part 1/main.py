@@ -5,8 +5,8 @@ from board import Board
 def main():
     bpath = "board-1-1.txt"
     board = Board(bpath)
-    print(board)
     a = astar(board)
-    print(a)
+    s = board.path_repr(a)
+    print(s)
 
 main()

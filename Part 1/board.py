@@ -40,10 +40,9 @@ class Board:
                         cell.add_adjacent(adj[k])
 
     def try_coords(self,i,j):
-        try:
-            return self.board[i][j]
-        except:
+        if i < 0 or j < 0 or i > len(self.board)-1 or j > len(self.board[0])-1:
             return 0
+        return self.board[i][j]
    
     def __str__(self):
         res = ""
@@ -62,6 +61,33 @@ class Board:
                 cell = self.board[y][x]
                 img.putpixel((x,y),cell.get_color(cell.c))
         img.show()
+
+    def path_image(self, closed):
+        xc = len(self.board[0])
+        yc = len(self.board)
+        img = Image.new("RGB",(xc,yc),(255,255,255))
+        for x in range(xc):
+            for y in range(yc):
+                cell = self.board[y][x]
+                img.putpixel((x,y),cell.get_color(cell.c))
+
+        for c in closed:
+            img.putpixel(c.coords, (255,0,0))
+        img = img.resize((xc*25,yc*25 ), Image.ANTIALIAS)
+        img.show()
+    
+    def path_repr(self, closed):
+        b = self.board
+        for c in closed:
+            coo = c.coords
+            b[coo[1]][coo[0]] = "*"
+        s = ""
+        for line in b:
+            for c in line:
+                s += str(c)
+            s+="\n"
+        return s
+
         
 
 b = Board("board-1-1.txt")

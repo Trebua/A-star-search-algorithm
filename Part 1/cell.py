@@ -16,9 +16,10 @@ class Cell:
         self.f = 0
         self.opened = False
         self.closed = False
+        self.kids = []
     
     def get_path_cost(self,c):
-        costs = {".": 0, "#": inf, "A": 0, "B": -inf}
+        costs = {".": 1, "#": inf, "A": 1, "B": 1}
         return costs[c]
 
     def __str__(self):

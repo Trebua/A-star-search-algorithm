@@ -17,20 +17,20 @@ def astar(board):
         closed.append(cell) #Legger cellen i closed fordi den er explored
         cell.closed = True
         if cell.stop: #Suksess om man treffer stopp-cellen
-            return cell
+            return closed
+            #return cell
 
         adjacents = cell.get_adjacents() #Henter alle nabo-celler av cellen
         for succ in adjacents:
-            print(succ)
             #If node S* has previously been created, and if state(S*) = state(S), then S ← S*.
-            #push(S,kids(X))
+            cell.kids.append(succ) #push(S,kids(X))
             if not succ.opened and not succ.closed:
                 attach_and_eval(succ, cell, board)
-                insert_ascending(opened, cell)
+                opened = insert_ascending(opened, succ)
             elif cell.g + succ.cost < succ.g:
                 attach_and_eval(succ, cell, board)
                 if succ.closed:
-                    propagate_path_improvements(succ, cell, board)
+                    propagate_path_improvements(succ)
             
 
 
@@ -53,7 +53,7 @@ def attach_and_eval(child, parent, board):
     child.f = child.g + child.h
 
 def propagate_path_improvements(parent):
-    children = parent.get_adjacents()
+    children = parent.kids
     for child in children:
         if parent.g + child.cost < child.g: #child.cost skal være arc-cost
             child.set_parent(parent)
