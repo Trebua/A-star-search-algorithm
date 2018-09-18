@@ -7,6 +7,7 @@ class Board:
         self.board = self.read_file(filename)
         self.set_adjacents()
         self.goal_coords
+        self.start_cell
 
     def read_file(self, filename):
         path = "boards/" + filename
@@ -20,6 +21,8 @@ class Board:
                 linelist.append(cell)
                 if c == "B":
                     self.goal_coords = (linelist.index(cell), len(result)) #Gir forhåpentligvis koordinatene til B
+                elif c == "A":
+                    self.start_cell = cell
             result.append(linelist)
         return result
     
@@ -28,15 +31,15 @@ class Board:
             for j in range(len(self.board[i])):
                 cell = self.board[i][j]
                 adj = []
-                adj.append(try_coords[i-1][j])
-                adj.append(try_coords[i][j-1])
-                adj.append(try_coords[i+1][j])
-                adj.append(try_coords[i][j+1])
+                adj.append(self.try_coords(i-1,j))
+                adj.append(self.try_coords(i,j-1))
+                adj.append(self.try_coords(i+1,j))
+                adj.append(self.try_coords(i,j+1))
                 for k in range(4):
                     if not adj[k] == 0:
                         cell.add_adjacent(adj[k])
 
-    def try_coords(i,j):
+    def try_coords(self,i,j):
         try:
             return self.board[i][j]
         except:

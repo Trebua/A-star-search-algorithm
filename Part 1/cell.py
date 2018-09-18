@@ -4,8 +4,8 @@ class Cell:
 
     def __init__(self, c, i, j):
         self.c = c
-        self.cost = get_path_cost(c)
-        self.color = self.getColor(c)
+        self.cost = self.get_path_cost(c)
+        self.color = self.get_color(c)
         self.start = True if c == 'A' else False
         self.stop = True if c == 'B' else False
         self.adjacent = []
@@ -14,6 +14,8 @@ class Cell:
         self.g = 0
         self.h = 0
         self.f = 0
+        self.opened = False
+        self.closed = False
     
     def get_path_cost(self,c):
         costs = {".": 0, "#": inf, "A": 0, "B": -inf}
@@ -33,7 +35,7 @@ class Cell:
         return dict[c]
 
     def set_parent(self, cell):
-        this.best_parent = cell
+        self.best_parent = cell
 
     def calculate_h(self, board):
         goal = board.goal_coords

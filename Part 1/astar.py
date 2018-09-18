@@ -1,11 +1,13 @@
 #Algorithm goes here
-def astar(cell, board):
-    opened = [] #Unexplored nodes, most promising nodes first
+def astar(board):
+    cell = board.start_cell
+    opened = [] #Unexplored nodes, most promising nodes first sort by ascending f value
     closed = [] #Explored nodes
     g = 0
     h = cell.calculate_h(board)
     f = g + h
     opened.append(cell) #Legger inn startcellen
+    cell.opened = True
 
     #agenda-loop
     while True:
@@ -13,13 +15,36 @@ def astar(cell, board):
             return False
         cell = opened.pop() #Popper siste element i closed, altså det mest promising
         closed.append(cell) #Legger cellen i closed fordi den er explored
+        cell.closed = True
         if cell.stop: #Suksess om man treffer stopp-cellen
             return cell
 
         adjacents = cell.get_adjacents() #Henter alle nabo-celler av cellen
-        for cell in adjacents: #Legger alle celler som ikke allerede er åpnet eller lukket inn i opened
-            if cell not in opened and cell not in closed:
-                opened.append(cell)
+        for succ in adjacents:
+            print(succ)
+            #If node S* has previously been created, and if state(S*) = state(S), then S ← S*.
+            #push(S,kids(X))
+            if not succ.opened and not succ.closed:
+                attach_and_eval(succ, cell, board)
+                insert_ascending(opened, cell)
+            elif cell.g + succ.cost < succ.g:
+                attach_and_eval(succ, cell, board)
+                if succ.closed:
+                    propagate_path_improvements(succ, cell, board)
+            
+
+
+def insert_ascending(l, cell):
+    for i in range(len(l)):
+        i_cell = l[i]
+        if cell.f <= i_cell.f:
+            l.insert(i, cell)
+            cell.opened = True
+            return l
+    l.append(cell)
+    cell.opened = True
+    return l
+
 
 def attach_and_eval(child, parent, board):
     child.set_parent(parent)
