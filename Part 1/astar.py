@@ -17,7 +17,12 @@ def astar(board):
         closed.append(cell) #Legger cellen i closed fordi den er explored
         cell.closed = True
         if cell.stop: #Suksess om man treffer stopp-cellen
-            return closed
+            path = [cell]
+            parent = cell.best_parent
+            while not parent == None:
+                path.append(parent)
+                parent = parent.best_parent
+            return path[::-1]
             #return cell
 
         adjacents = cell.get_adjacents() #Henter alle nabo-celler av cellen

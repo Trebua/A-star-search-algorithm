@@ -19,7 +19,7 @@ class Cell:
         self.kids = []
     
     def get_path_cost(self,c):
-        costs = {".": 1, "#": inf, "A": 1, "B": 1}
+        costs = {".": 1, "#": -inf, "A": 1, "B": 1}
         return costs[c]
 
     def __str__(self):
