@@ -1,5 +1,5 @@
 from cell import Cell
-from PIL import Image
+from PIL import Image, ImageDraw
 
 class Board:
 
@@ -62,19 +62,32 @@ class Board:
                 img.putpixel((x,y),cell.get_color(cell.c))
         img.show()
 
-    def path_image(self, closed):
-        xc = len(self.board[0])
-        yc = len(self.board)
-        img = Image.new("RGB",(xc,yc),(255,255,255))
-        for x in range(xc):
-            for y in range(yc):
-                cell = self.board[y][x]
-                img.putpixel((x,y),cell.get_color(cell.c))
-
-        for c in closed:
-            img.putpixel(c.coords, (255,0,0))
-        img = img.resize((xc*25,yc*25 ), Image.ANTIALIAS)
+    def board_image(self, path):
+        xp = len(self.board[0])
+        yp = len(self.board)
+        width = 100 * xp
+        height = 100 * yp
+        img = Image.new("RGB", size=(width, height), color=255)
+        draw = ImageDraw.Draw(img)
+        xstep = width/xp
+        ystep = height/yp
+        x = 0
+        y = 0
+        for row in self.board:
+            for cell in row:
+                if type(cell) is str:
+                    color = "yellow"
+                else:
+                    color = cell.color
+                if cell in path:
+                    color = "yellow"
+                draw.rectangle((x*xstep, y*ystep, xstep*(x+1), ystep*(y+1)), color)
+                x = (x+1)%len(self.board[0])
+                if x == 0:
+                    y += 1
+        del draw
         img.show()
+        
     
     def path_repr(self, closed):
         b = self.board
@@ -87,13 +100,5 @@ class Board:
                 s += str(c)
             s+="\n"
         return s
-
-        
-
-b = Board("board-1-1.txt")
-
-#b.boardToImage()
-
-
                 
         
