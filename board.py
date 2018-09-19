@@ -63,7 +63,7 @@ class Board:
         width = 100 * xp
         height = 100 * yp
         img = Image.new("RGB", size=(width, height), color=255)
-        font = ImageFont.truetype("arial_narrow_7.ttf", 100)
+        font = ImageFont.truetype("div/arial_narrow_7.ttf", 100)
         draw = ImageDraw.Draw(img)
         xstep = width/xp
         ystep = height/yp
