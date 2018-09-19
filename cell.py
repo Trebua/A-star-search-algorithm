@@ -2,6 +2,7 @@ from math import *
 
 class Cell:
 
+    #cell class containing lots of information
     def __init__(self, c, i, j):
         self.c = c
         self.cost = self.get_path_cost(c)
@@ -17,6 +18,7 @@ class Cell:
         self.opened = False
         self.closed = False
     
+    #Calculates path cost based on characters in a dictionary
     def get_path_cost(self,c):
         costs = {".": 1, "#": inf, "A": 1, "B": 1, "w": 100, "m": 50, "f": 10, "g": 5, "r": 1}
         return costs[c]
@@ -30,14 +32,15 @@ class Cell:
     def get_adjacents(self):
         return self.adjacent
 
+    #Gets color of cell based on character in dictionary
     def get_color(self, c):
-        dict = {".": (255,255,255), "#": (0,0,0), "A": (221, 255, 216), "B": (221, 255, 216), "w": (0,0,255), "m": (153,153,153), "f": (2, 102, 33), "g": (83, 232, 129), "r": (163, 130, 99)}
         dicthex = {".": "white", "#": "black", "A": "red", "B": "red", "w": "blue", "m": "gray", "f":"#044400", "g": "#0de500", "r": "#c9a380"}
         return dicthex[c]
 
     def set_parent(self, cell):
         self.best_parent = cell
 
+    #Calculate manhattan distance based on the boards goal-coordinates and the cell's own coordinates
     def calculate_h(self, board):
         goal = board.goal_coords
         coords = self.coords

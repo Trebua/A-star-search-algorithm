@@ -3,12 +3,14 @@ from PIL import Image, ImageDraw, ImageFont
 
 class Board:
 
+    #Initializes board with file, and finds adjacent cells (N,S,E,W)
     def __init__(self, filename):
         self.board = self.read_file(filename)
         self.set_adjacents()
         self.goal_coords
         self.start_cell
 
+    #Reads file from boards and finds coordinates of start and goal
     def read_file(self, filename):
         path = "boards/" + filename
         f = open(path, "r")
@@ -26,6 +28,7 @@ class Board:
             result.append(linelist)
         return result
     
+    #Finds all adjacent cells for every cell
     def set_adjacents(self):
         for i in range(len(self.board)):
             for j in range(len(self.board[i])):
@@ -39,6 +42,7 @@ class Board:
                     if not adj[k] == 0:
                         cell.add_adjacent(adj[k])
 
+    #Checks if coordinates is withing board constraints
     def try_coords(self,i,j):
         if i < 0 or j < 0 or i > len(self.board)-1 or j > len(self.board[0])-1:
             return 0
@@ -52,6 +56,7 @@ class Board:
             res += "\n"
         return res
 
+    #Generates visualization for a board with PILLOW. Colors are specified in cells
     def board_to_image(self, path):
         xp = len(self.board[0])
         yp = len(self.board)
