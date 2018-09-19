@@ -17,10 +17,10 @@ class Board:
             l = l.replace("\n", "")
             linelist = []          
             for c in l:
-                cell = Cell(c, len(linelist), len(result)) #Legger til index på celle
+                cell = Cell(c, len(linelist), len(result))
                 linelist.append(cell)
                 if c == "B":
-                    self.goal_coords = (linelist.index(cell), len(result)) #Gir forhåpentligvis koordinatene til B
+                    self.goal_coords = (linelist.index(cell), len(result))
                 elif c == "A":
                     self.start_cell = cell
             result.append(linelist)

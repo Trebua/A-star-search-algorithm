@@ -11,15 +11,14 @@ class Cell:
         self.adjacent = []
         self.best_parent = None
         self.coords = (i,j)
-        self.g = 0
+        self.g = self.cost #kanskje 0?
         self.h = 0
         self.f = 0
         self.opened = False
         self.closed = False
-        self.kids = []
     
     def get_path_cost(self,c):
-        costs = {".": 1, "#": -inf, "A": 1, "B": 1}
+        costs = {".": 1, "#": inf, "A": 1, "B": 1, "w": 100, "m": 50, "f": 10, "g": 5, "r": 1}
         return costs[c]
 
     def __str__(self):
@@ -32,7 +31,7 @@ class Cell:
         return self.adjacent
 
     def get_color(self, c):
-        dict = {".": (255,255,255), "#": (0,0,0), "A": (221, 255, 216), "B": (221, 255, 216)}
+        dict = {".": (255,255,255), "#": (0,0,0), "A": (221, 255, 216), "B": (221, 255, 216), "w": (0,0,255), "m": (153,153,153), "f": (2, 102, 33), "g": (83, 232, 129), "r": (163, 130, 99)}
         return dict[c]
 
     def set_parent(self, cell):
@@ -41,4 +40,5 @@ class Cell:
     def calculate_h(self, board):
         goal = board.goal_coords
         coords = self.coords
-        return abs(goal[0] - coords[0]) + abs(goal[1] - coords[1])
+        self.h = abs(goal[0] - coords[0]) + abs(goal[1] - coords[1])
+        return self.h
