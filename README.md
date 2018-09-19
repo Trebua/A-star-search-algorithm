@@ -1,6 +1,6 @@
 # A-star-search-algorithm
-Using A* to find the shortest path in grid and visualizing it using Python imaginglibrary PILLOW.
+Using A* to find the shortest path in a grid and visualizing it using Python imaging library PILLOW.
 
-Example:
+### Example:
 ![Shortest path visualization](https://raw.githubusercontent.com/Trebua/A-star-search-algorithm/master/avisual.jpg)
 
