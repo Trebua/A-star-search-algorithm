@@ -32,7 +32,7 @@ class Cell:
 
     def get_color(self, c):
         dict = {".": (255,255,255), "#": (0,0,0), "A": (221, 255, 216), "B": (221, 255, 216), "w": (0,0,255), "m": (153,153,153), "f": (2, 102, 33), "g": (83, 232, 129), "r": (163, 130, 99)}
-        dicthex = {".": "white", "#": "black", "A": "green", "B": "green", "w": "blue", "m": "gray", "f":"#044400", "g": "#0de500", "r": "brown"}
+        dicthex = {".": "white", "#": "black", "A": "red", "B": "red", "w": "blue", "m": "gray", "f":"#044400", "g": "#0de500", "r": "#c9a380"}
         return dicthex[c]
 
     def set_parent(self, cell):

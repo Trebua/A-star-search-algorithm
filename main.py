@@ -6,7 +6,6 @@ def main():
     bpath = "board-1-2.txt"
     board = Board(bpath)
     a = astar(board)
-    board.board_image(a)
-
+    board.board_to_image(a)
 
 main()

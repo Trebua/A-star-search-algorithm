@@ -1,5 +1,5 @@
 from cell import Cell
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 class Board:
 
@@ -52,12 +52,13 @@ class Board:
             res += "\n"
         return res
 
-    def board_image(self, path):
+    def board_to_image(self, path):
         xp = len(self.board[0])
         yp = len(self.board)
         width = 100 * xp
         height = 100 * yp
         img = Image.new("RGB", size=(width, height), color=255)
+        font = ImageFont.truetype("arial_narrow_7.ttf", 100)
         draw = ImageDraw.Draw(img)
         xstep = width/xp
         ystep = height/yp
@@ -66,26 +67,16 @@ class Board:
         for row in self.board:
             for cell in row:
                 color = cell.color
-                if cell in path and (not cell.start and not cell.stop):
-                    color = "yellow"
                 draw.rectangle((x*xstep, y*ystep, xstep*(x+1), ystep*(y+1)), color)
+                if cell.start or cell.stop:
+                    text = "A" if cell.start else "B"
+                    draw.text(((x+0.3)*xstep, (y+0.12)*ystep),text,(255,255,255), font)
+                if cell in path and (not cell.start and not cell.stop):
+                    draw.rectangle(((x+0.25)*xstep, (y+0.25)*ystep, xstep*(x+0.75), ystep*(y+0.75)), "yellow")
                 x = (x+1)%len(self.board[0])
                 if x == 0:
                     y += 1
         del draw
         img.show()
-        
-    
-    def board_signs(self, closed):
-        b = self.board
-        for c in closed:
-            coo = c.coords
-            b[coo[1]][coo[0]] = "*"
-        s = ""
-        for line in b:
-            for c in line:
-                s += str(c)
-            s+="\n"
-        return s
                 
         
