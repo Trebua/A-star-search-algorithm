@@ -34,7 +34,7 @@ class Cell:
 
     #Gets color of cell based on character in dictionary
     def get_color(self, c):
-        dicthex = {".": "white", "#": "black", "A": "red", "B": "red", "w": "blue", "m": "gray", "f":"#044400", "g": "#0de500", "r": "#c9a380"}
+        dicthex = {".": "white", "#": "black", "A": "red", "B": "red", "w": "#5ed1ff", "m": "gray", "f":"#044400", "g": "#46b23e", "r": "#c9a380"}
         return dicthex[c]
 
     def set_parent(self, cell):
