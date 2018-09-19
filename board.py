@@ -52,16 +52,6 @@ class Board:
             res += "\n"
         return res
 
-    def boardToImage(self):
-        xc = len(self.board[0])
-        yc = len(self.board)
-        img = Image.new("RGB",(xc,yc),(255,255,255))
-        for x in range(xc):
-            for y in range(yc):
-                cell = self.board[y][x]
-                img.putpixel((x,y),cell.get_color(cell.c))
-        img.show()
-
     def board_image(self, path):
         xp = len(self.board[0])
         yp = len(self.board)
@@ -75,11 +65,8 @@ class Board:
         y = 0
         for row in self.board:
             for cell in row:
-                if type(cell) is str:
-                    color = "yellow"
-                else:
-                    color = cell.color
-                if cell in path:
+                color = cell.color
+                if cell in path and (not cell.start and not cell.stop):
                     color = "yellow"
                 draw.rectangle((x*xstep, y*ystep, xstep*(x+1), ystep*(y+1)), color)
                 x = (x+1)%len(self.board[0])
@@ -89,7 +76,7 @@ class Board:
         img.show()
         
     
-    def path_repr(self, closed):
+    def board_signs(self, closed):
         b = self.board
         for c in closed:
             coo = c.coords
