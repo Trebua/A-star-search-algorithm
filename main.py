@@ -7,7 +7,9 @@ from board import Board
 def main():
     bpath = "board-2-4.txt"
     board = Board(bpath)
-    a = dijkstra(board)
-    board.board_to_image(a)
+    b, o, c = dijkstra(board)
+    board.board_to_image_e(b,o,c)
+    print("Opened: " + str(len(o)))
+    print("Closed: " + str(len(c)))
 
 main()

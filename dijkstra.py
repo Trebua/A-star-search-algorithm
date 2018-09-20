@@ -19,7 +19,7 @@ def dijkstra(board):
             while not parent == None:
                 path.append(parent)
                 parent = parent.best_parent
-            return path[::-1] #Returnerer pathen i omvendt rekkefølge, fra A til B
+            return path[::-1], opened, closed #Returnerer pathen i omvendt rekkefølge, fra A til B
 
         adjacents = cell.get_adjacents() #Henter alle nabo-celler av cellen
         for succ in adjacents: #Går gjennom alle successors/naboceller
