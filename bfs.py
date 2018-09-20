@@ -1,4 +1,4 @@
-def astar(board):
+def bfs(board):
     opened, closed = list(), list() #Lager tomme opened- og closed-lister
     cell = board.start_cell #Setter start-cellen
     cell.g = 0
@@ -19,29 +19,17 @@ def astar(board):
             while not parent == None:
                 path.append(parent)
                 parent = parent.best_parent
-            return path[::-1], opened, closed #Returnerer pathen i omvendt rekkefølge, fra A til B
+            return path[::-1] #Returnerer pathen i omvendt rekkefølge, fra A til B
 
         adjacents = cell.get_adjacents() #Henter alle nabo-celler av cellen
         for succ in adjacents: #Går gjennom alle successors/naboceller
             if not succ.opened and not succ.closed:  #Hvis ikke successor er åpnet eller lukket, regn ut childs f
                 attach_and_eval(succ, cell, board)
-                opened = insert_ascending(opened, succ) #Legg inn successor i opened, med mest lovende først
+                opened.append(succ) #Legg inn successor i opened, med mest lovende først
             elif cell.g + succ.cost < succ.g: #Ser om parent og childs lengde er indre enn successors lengde
                 attach_and_eval(succ, cell, board) #Regner ut f for successor og setter cell som parent
                 if succ.closed:
                     propagate_path_improvements(succ) #Hvis succ er closed, oppdater alle children of childrens f
-            
-#Legger celle i liste, i stigende f-verdi
-def insert_ascending(l, cell):
-    for i in range(len(l)):
-        i_cell = l[i]
-        if cell.f <= i_cell.f:
-            l.insert(i, cell)
-            cell.opened = True
-            return l
-    l.append(cell)
-    cell.opened = True
-    return l
 
 #Setter childs parent og regner ut childs f
 def attach_and_eval(child, parent, board):

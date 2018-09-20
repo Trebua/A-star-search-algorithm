@@ -1,4 +1,4 @@
-def astar(board):
+def dijkstra(board):
     opened, closed = list(), list() #Lager tomme opened- og closed-lister
     cell = board.start_cell #Setter start-cellen
     cell.g = 0
@@ -19,7 +19,7 @@ def astar(board):
             while not parent == None:
                 path.append(parent)
                 parent = parent.best_parent
-            return path[::-1], opened, closed #Returnerer pathen i omvendt rekkefølge, fra A til B
+            return path[::-1] #Returnerer pathen i omvendt rekkefølge, fra A til B
 
         adjacents = cell.get_adjacents() #Henter alle nabo-celler av cellen
         for succ in adjacents: #Går gjennom alle successors/naboceller
@@ -31,11 +31,11 @@ def astar(board):
                 if succ.closed:
                     propagate_path_improvements(succ) #Hvis succ er closed, oppdater alle children of childrens f
             
-#Legger celle i liste, i stigende f-verdi
+#Legger celle i liste, i stigende g-verdi
 def insert_ascending(l, cell):
     for i in range(len(l)):
         i_cell = l[i]
-        if cell.f <= i_cell.f:
+        if cell.g <= i_cell.g:
             l.insert(i, cell)
             cell.opened = True
             return l
